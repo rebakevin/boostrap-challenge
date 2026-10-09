@@ -1,22 +1,133 @@
-<!-- Register form (Bootstrap modal) -->
-<div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
+<!-- Register form: Bootstrap modal (#registerModal).
+     It is opened by the Register Now buttons in hero.html and schedule.html -->
+
+<!-- Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content">
 
-      <div class="modal-header">
-        <h5 class="modal-title">Register for Conference</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-        </button>
+      <div class="modal-header bg-warning">
+        <h5 class="modal-title" id="registerModalTitle">Register for Conference</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
       <div class="modal-body">
-        <!-- TODO: alert, Basic Info, Topics, Payment Info -->
-        <form>
+
+        <!-- Alert -->
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>Hurry !</strong> Early bird registration ends in two days.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <form id="registerForm">
+
+          <!-- Basic info -->
+          <h5 class="mb-3">Basic Info.</h5>
+          <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input type="text" class="form-control" id="name" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="email" required>
+          </div>
+          <div class="mb-3">
+            <label for="role" class="form-label">Job Role:</label>
+            <select class="form-select" id="role">
+              <option selected>Full Stack JS Developer</option>
+              <option>Front End Developer</option>
+              <option>Back End Developer</option>
+              <option>Designer</option>
+              <option>Student</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <hr>
+
+          <!-- Topics -->
+          <h5 class="mb-3">Which Topics Interest You Most?</h5>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="topic1">
+            <label class="form-check-label" for="topic1">JavaScript Frameworks</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="topic2">
+            <label class="form-check-label" for="topic2">JavaScript Libraries</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="topic3">
+            <label class="form-check-label" for="topic3">Node.js</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="topic4">
+            <label class="form-check-label" for="topic4">Build Tools</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="topic5">
+            <label class="form-check-label" for="topic5">ES2015</label>
+          </div>
+
+          <hr>
+
+          <!-- Payment info -->
+          <h5 class="mb-3">Payment Info.</h5>
+          <div class="row mb-3">
+            <div class="col-6">
+              <label for="card" class="form-label">Card Number:</label>
+              <input type="text" class="form-control" id="card">
+            </div>
+            <div class="col-3">
+              <label for="zip" class="form-label">Zip Code:</label>
+              <input type="text" class="form-control" id="zip">
+            </div>
+            <div class="col-3">
+              <label for="cvv" class="form-label">CVV:</label>
+              <input type="text" class="form-control" id="cvv">
+            </div>
+          </div>
+
+          <label class="form-label">Expiration Date:</label>
+          <div class="row">
+            <div class="col-6">
+              <select class="form-select" aria-label="Expiration month">
+                <option selected>1 - January</option>
+                <option>2 - February</option>
+                <option>3 - March</option>
+                <option>4 - April</option>
+                <option>5 - May</option>
+                <option>6 - June</option>
+                <option>7 - July</option>
+                <option>8 - August</option>
+                <option>9 - September</option>
+                <option>10 - October</option>
+                <option>11 - November</option>
+                <option>12 - December</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <select class="form-select" aria-label="Expiration year">
+                <option selected>2016</option>
+                <option>2017</option>
+                <option>2018</option>
+                <option>2019</option>
+                <option>2020</option>
+                <option>2021</option>
+                <option>2022</option>
+                <option>2023</option>
+                <option>2024</option>
+                <option>2025</option>
+                <option>2026</option>
+                <option>2027</option>
+              </select>
+            </div>
+          </div>
+
         </form>
       </div>
 
       <div class="modal-footer">
-        <!-- TODO: Register button -->
+        <button type="submit" form="registerForm" class="btn btn-dark">Register</button>
       </div>
 
     </div>
