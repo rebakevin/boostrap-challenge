@@ -22,7 +22,9 @@ In this bootstrap challenge you are tasked to replicate the web page shown in th
 
 Each build overwrites `index.html`, even if it already exists.
 
-> **Never edit `index.html`.** It is generated, so your changes would be lost on the next build. Edit the files in `core/` instead.
+> [!CAUTION]
+> **NEVER EDIT `index.html`!**
+> It is generated, so your changes will be lost on the next build. Edit the files in `core/` instead.
 
 ## Troubleshooting
 
