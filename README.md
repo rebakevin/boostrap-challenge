@@ -26,6 +26,9 @@ Each build overwrites `index.html`, even if it already exists.
 
 ## Troubleshooting
 
+<details>
+<summary>Click to open the troubleshooting guide</summary>
+
 **`permission denied: ./build.sh` (Mac / Linux)**
 The script is not executable. Fix it once with:
 ```sh
@@ -50,3 +53,5 @@ You are not in the project folder. Run `cd` to the project folder first, then `b
 
 **The page has no styles or the modal/dropdown doesn't work**
 Bootstrap is loaded from a CDN, so you need an internet connection.
+
+</details>
