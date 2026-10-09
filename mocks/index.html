@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Conference App</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+  <style>
+    html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+    body { font-family: 'Roboto', sans-serif; padding-top: 48px; color: #212529; }
+    .container { max-width: 866px; }
+
+    /* navbar */
+    .navbar { background: #343a40; height: 48px; padding: 0; border-top: 1px solid #5a5a40; }
+    .navbar .nav-link { color: #fff !important; font-size: 14px; padding: 0 .5rem !important; }
+    .navbar .nav-link.active { font-weight: 400; }
+    .navbar-text, .navbar-text a { font-size: 14px; color: #fff; }
+    .navbar-text .brand { color: #ffc107; text-decoration: none; }
+    .navbar-text .brand:hover { color: #ffd54f; }
+
+    /* hero */
+    .jumbotron { background: #fcc200; border-radius: 0; margin-bottom: 0; padding: 3.2rem 1rem 3.4rem; color: #212529; }
+    .jumbotron h1 { font-weight: 300; font-size: 3.5rem; margin-bottom: .2rem; }
+    .jumbotron p.lead { font-weight: 300; font-size: 1.1rem; margin-bottom: 2rem; }
+    .btn-secondary { background: #6c757d; }
+    .btn-dark { background: #343a40; }
+    .hero-btns .btn { font-size: 1.1rem; padding: .45rem .9rem; }
+
+    /* sections */
+    h3.col-title { font-size: 1.6rem; font-weight: 500; margin: 2.2rem 0 1rem; }
+    p { font-size: 14px; line-height: 1.6; }
+    .about-img { width: 100%; height: auto; border-radius: .25rem; margin-bottom: 1rem; display: block; }
+    .list-group-item { font-size: 14px; padding: .75rem 1rem; }
+
+    .section-title { font-size: 4rem; font-weight: 300; color: #6c757d; text-align: center; margin: 3rem 0 1.6rem; }
+    #speakers .card { margin-bottom: 1.4rem; transition: box-shadow .2s, transform .2s; cursor: pointer; }
+    #speakers .card:hover { box-shadow: 0 .5rem 1rem rgba(0,0,0,.15); transform: translateY(-2px); }
+    #speakers .card img { border-radius: .25rem .25rem 0 0; }
+    #speakers .card-title { font-size: 1.1rem; font-weight: 500; }
+    #speakers .card-text { font-size: 14px; }
+    #speakers .card-body { padding: 1.15rem 1rem 0.6rem; }
+
+    #schedule .list-group-item { padding: .8rem 1rem .65rem; transition: background .15s; }
+    #schedule .list-group-item:hover { background: #e9ecef; }
+    #schedule .list-group-item.lunch, #schedule .list-group-item.lunch:hover { background: #d3d3d3; }
+    #schedule h5 { font-size: 1rem; font-weight: 500; margin-bottom: .35rem; }
+    #schedule .speaker { font-size: 13px; }
+    .badge-warning { background: #fcc200; color: #212529; font-size: 10px; font-weight: 700; padding: .5em .85em; border-radius: 10rem; }
+    .btn-register-cta { font-size: 1.05rem; background: transparent; border: 1px solid #343a40; color: #212529; padding: .45rem .9rem; }
+    .btn-register-cta:hover { background: #343a40; color: #fff; }
+
+    /* footer */
+    footer h6 { font-size: 13px; font-weight: 700; color: #6c757d; }
+    footer p { color: #6c757d; font-size: 14px; }
+    .footer-bar { font-size: 13px; color: #6c757d; }
+    .footer-bar a.muted { color: #6c757d; margin-right: 1.2rem; }
+    .dropup .dropdown-menu { font-size: 14px; min-width: 7rem; }
+
+    /* modal */
+    .modal-header { background: #fcc200; padding: .9rem 1rem; }
+    .modal-title { font-size: 1.1rem; font-weight: 500; }
+    .modal-header .close { opacity: .6; }
+    .modal .alert-warning { background: #fff3cd; color: #856404; font-size: 14px; }
+    .modal h5.sub { font-size: 1.15rem; font-weight: 500; margin: 1rem 0 .8rem; }
+    .modal label { font-size: 14px; margin-bottom: .4rem; }
+    .modal .form-check-label { margin-bottom: 0; }
+    .modal-footer .btn-secondary { background: #343a40; border-color: #343a40; }
+    .modal-footer .btn-secondary:hover { background: #23272b; }
+    .toast-box { position: fixed; right: 1rem; bottom: 1rem; z-index: 2000; }
+
+    @media (max-width: 767px) { .section-title { font-size: 3rem; } .jumbotron h1 { font-size: 2.6rem; } }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div class="container">
+    <ul class="navbar-nav mr-auto flex-row" id="nav">
+      <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+      <li class="nav-item"><a class="nav-link" href="#speakers">Speakers</a></li>
+      <li class="nav-item"><a class="nav-link" href="#schedule">Schedule</a></li>
+    </ul>
+    <span class="navbar-text">Powered By <a class="brand" href="#home">PARAGRAPH</a></span>
+  </div>
+</nav>
+
+<header id="home" class="jumbotron text-center">
+  <div class="container">
+    <h1>Full Stack Conf</h1>
+    <p class="lead">A One-Day Conference About All Things JavaScript</p>
+    <div class="btn-group hero-btns">
+      <button class="btn btn-secondary" data-toggle="modal" data-target="#registerModal">Register Now</button>
+      <a class="btn btn-dark" href="#speakers">See Speakers</a>
+    </div>
+  </div>
+</header>
+
+<main class="container" id="about">
+  <div class="row">
+    <div class="col-md-4">
+      <h3 class="col-title">Expert Speakers</h3>
+      <p>Lorem ipsum dolor sit amet, consetetur sadipscingt accusam et justo duo dolores et ea rebum.</p>
+      <p>Lorem ipsum dolor sit amet, consetetur sadipscingt accusam et justo duo dolores et ea rebum.et justo duo dolores et ea rebum.</p>
+      <p>Lorem ipsum dolor sit amet, consetetur sadipscingt accusam et justo duo dolores et ea rebum.et justo duo dolores et ea rebum.</p>
+    </div>
+    <div class="col-md-4">
+      <h3 class="col-title">About Full Stack Conf</h3>
+      <img class="about-img" src="img/about.png" alt="About Full Stack Conf">
+      <p>Lorem ipsum dolor sit amet, consetetur sadipscingt accusam et justo duo dolores et ea rebum.</p>
+      <p>Lorem ipsum dolor sit amet, consetetur sadipscingt accusam et justo duo dolores et ea rebum.et justo duo dolores et ea rebum.</p>
+    </div>
+    <div class="col-md-4">
+      <h3 class="col-title">What you will Learn</h3>
+      <ul class="list-group">
+        <li class="list-group-item"><strong>MongoDB</strong>: NoSQL Database</li>
+        <li class="list-group-item"><strong>Express</strong>: Framework for Node</li>
+        <li class="list-group-item"><strong>React</strong>: JavaScript Library</li>
+        <li class="list-group-item"><strong>Node JS</strong>: JavaScript Environment</li>
+        <li class="list-group-item"><strong>ES2015</strong>: Latest JavaScript Version</li>
+        <li class="list-group-item"><strong>Babel</strong>: JavaScript Compiler</li>
+      </ul>
+    </div>
+  </div>
+
+  <section id="speakers">
+    <h2 class="section-title">Speakers</h2>
+    <div class="row" id="speakerGrid"></div>
+  </section>
+
+  <section id="schedule">
+    <h2 class="section-title">Schedule</h2>
+    <div class="list-group" id="scheduleList"></div>
+    <div class="text-center my-4">
+      <button class="btn btn-register-cta" data-toggle="modal" data-target="#registerModal">Don't Miss out Register Now</button>
+    </div>
+  </section>
+
+  <hr>
+  <footer>
+    <div class="row py-3">
+      <div class="col-md-6">
+        <h6>About Paragraph</h6>
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscingt accusam et justo duo dolores.</p>
+      </div>
+      <div class="col-md-6">
+        <h6>Stay up to date on Paragraph Conference</h6>
+        <form class="form-inline flex-nowrap" id="signupForm">
+          <input type="email" class="form-control flex-grow-1" id="signupEmail" required aria-label="Email" style="border-radius:.25rem 0 0 .25rem">
+          <button class="btn btn-secondary" style="border-radius:0 .25rem .25rem 0">Sign up</button>
+        </form>
+      </div>
+    </div>
+    <hr>
+    <div class="footer-bar d-flex flex-wrap align-items-center justify-content-between py-3">
+      <div class="d-flex align-items-center">
+        <a class="muted" href="#">Community</a>
+        <a class="muted" href="#">Tracks</a>
+        <div class="btn-group dropup">
+          <button class="btn btn-sm btn-outline-dark" type="button" data-toggle="dropdown">Other Confs</button>
+          <button class="btn btn-sm btn-dark dropdown-toggle dropdown-toggle-split" type="button" data-toggle="dropdown" aria-label="Toggle dropdown"></button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">CSS Conf</a>
+            <a class="dropdown-item" href="#">Python Conf</a>
+            <a class="dropdown-item" href="#">Ruby Conf</a>
+            <a class="dropdown-item" href="#">Java Conf</a>
+          </div>
+        </div>
+      </div>
+      <span>&copy; 2018 Full Stack Conf &amp; Paragraph</span>
+    </div>
+  </footer>
+</main>
+
+<!-- Register modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="registerTitle">Register for Conference</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>Hurry !</strong> Early bird registration ends in two days.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <form id="registerForm" novalidate>
+          <h5 class="sub">Basic Info.</h5>
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" required>
+            <div class="invalid-feedback">Please enter your name.</div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" required>
+            <div class="invalid-feedback">Please enter a valid email.</div>
+          </div>
+          <div class="form-group">
+            <label for="role">Job Role:</label>
+            <select class="custom-select" id="role">
+              <option>Full Stack JS Developer</option>
+              <option>Front End Developer</option>
+              <option>Back End Developer</option>
+              <option>Designer</option>
+              <option>Student</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <hr>
+          <h5 class="sub">Which Topics Interest You Most?</h5>
+          <div id="topics"></div>
+          <hr>
+          <h5 class="sub">Payment Info.</h5>
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label for="card">Card Number:</label>
+              <input type="text" class="form-control" id="card" inputmode="numeric" maxlength="19" required>
+              <div class="invalid-feedback">Enter a valid card number.</div>
+            </div>
+            <div class="form-group col-3">
+              <label for="zip">Zip Code:</label>
+              <input type="text" class="form-control" id="zip" maxlength="10" required>
+              <div class="invalid-feedback">Required.</div>
+            </div>
+            <div class="form-group col-3">
+              <label for="cvv">CVV:</label>
+              <input type="text" class="form-control" id="cvv" inputmode="numeric" maxlength="4" required>
+              <div class="invalid-feedback">Required.</div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-12"><label>Expiration Date:</label></div>
+            <div class="form-group col-6"><select class="custom-select" id="expMonth"></select></div>
+            <div class="form-group col-6"><select class="custom-select" id="expYear"></select></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" form="registerForm" class="btn btn-secondary">Register</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-box"><div class="alert alert-success shadow d-none" id="toast" role="status"></div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+<script>
+  // 640x360 placeholder, as in the design
+  const ph = 'data:image/svg+xml,' + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">' +
+    '<rect width="640" height="360" fill="#eee"/>' +
+    '<text x="320" y="190" font-family="Roboto,Arial,sans-serif" font-size="48" fill="#aaa" text-anchor="middle" dominant-baseline="middle">640 × 360</text></svg>');
+
+  $('#speakerGrid').html(Array.from({length: 6}, () => `
+    <div class="col-md-4">
+      <div class="card">
+        <img class="card-img-top" src="${ph}" alt="Pelino">
+        <div class="card-body">
+          <h5 class="card-title">Pelino</h5>
+          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        </div>
+      </div>
+    </div>`).join(''));
+
+  const sessions = [
+    ['Keynote: Internet of Things', 'Pelino', '9:00am'],
+    ['React Basics', 'James', '10:00am'],
+    ['Mongo!', 'Pelino', '11:00am'],
+    ['Lunch', 'Free Pizza', '12:00pm'],
+    ['Intro: Node JS', 'Pelino', '2:00pm'],
+    ['Express', 'Pelino', '3:00pm'],
+    ['Babel', 'Pelino', '4:00pm'],
+  ];
+  $('#scheduleList').html(sessions.map(([t, s, time]) => `
+    <div class="list-group-item${t === 'Lunch' ? ' lunch' : ''}">
+      <div class="d-flex justify-content-between align-items-start">
+        <h5>${t}</h5><span class="badge badge-warning">${time}</span>
+      </div>
+      <div class="speaker">${s}</div>
+    </div>`).join(''));
+
+  $('#topics').html(['JavaScript Frameworks', 'JavaScript Libraries', 'Node.js', 'Build Tools', 'ES2015'].map((t, i) => `
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="checkbox" id="topic${i}" value="${t}">
+      <label class="form-check-label" for="topic${i}">${t}</label>
+    </div>`).join(''));
+
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  $('#expMonth').html(months.map((m, i) => `<option>${i + 1} - ${m}</option>`).join(''));
+  $('#expYear').html(Array.from({length: 12}, (_, i) => `<option>${2016 + i}</option>`).join(''));
+
+  function toast(msg) {
+    $('#toast').text(msg).removeClass('d-none');
+    setTimeout(() => $('#toast').addClass('d-none'), 3500);
+  }
+
+  $('#card').on('input', function () {
+    this.value = this.value.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim();
+  });
+  $('#cvv, #zip').on('input', function () { this.value = this.value.replace(/[^\dA-Za-z -]/g, ''); });
+
+  $('#registerForm').on('submit', function (e) {
+    e.preventDefault();
+    let ok = true;
+    this.querySelectorAll('[required]').forEach(el => {
+      let valid = el.checkValidity();
+      if (el.id === 'card') valid = valid && el.value.replace(/\D/g, '').length >= 13;
+      el.classList.toggle('is-invalid', !valid);
+      if (!valid) ok = false;
+    });
+    if (!ok) return;
+    const name = $('#name').val();
+    this.reset();
+    $('#registerModal').modal('hide');
+    toast(`Thanks ${name}, you're registered!`);
+  });
+  $('#registerForm').on('input', '.is-invalid', function () { this.classList.remove('is-invalid'); });
+
+  $('#signupForm').on('submit', function (e) {
+    e.preventDefault();
+    toast(`Subscribed ${$('#signupEmail').val()} to updates.`);
+    this.reset();
+  });
+
+  $('.dropup .dropdown-item').on('click', function (e) { e.preventDefault(); toast(`${this.textContent} — coming soon`); });
+  $('.footer-bar a.muted').on('click', e => e.preventDefault());
+
+  // active nav link on scroll
+  const links = $('#nav .nav-link');
+  const ids = links.map((_, a) => a.getAttribute('href')).get();
+  function spy() {
+    let cur = ids[0];
+    ids.forEach(id => { if ($(id).offset().top - 80 <= window.scrollY) cur = id; });
+    links.each((_, a) => a.classList.toggle('active', a.getAttribute('href') === cur));
+  }
+  $(window).on('scroll', spy); spy();
+</script>
+</body>
+</html>
