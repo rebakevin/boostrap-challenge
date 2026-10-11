@@ -328,22 +328,37 @@
 <!-- Footer -->
 <footer class="container">
   <hr>
-  <div class="row">
+  <div class="row py-3">
     <div class="col-md-6">
-      <!-- TODO: About Paragraph -->
+      <h6 class="fw-bold text-secondary">About Paragraph</h6>
+      <p class="text-secondary">Lorem ipsum dolor sit amet, consetetur sadipscingt accusam et justo duo dolores.</p>
     </div>
     <div class="col-md-6">
-      <!-- TODO: Stay up to date + Sign up form -->
+      <h6 class="fw-bold text-secondary">Stay up to date on Paragraph Conference</h6>
+      <div class="input-group">
+        <input type="email" class="form-control" aria-label="Email">
+        <button class="btn btn-secondary" type="button">Sign up</button>
+      </div>
     </div>
   </div>
 
   <hr>
-  <div class="d-flex justify-content-between">
-    <div>
-      <!-- TODO: Community, Tracks, Other Confs dropdown -->
+  <div class="d-flex justify-content-between align-items-center py-3">
+    <div class="d-flex align-items-center gap-3">
+      <a href="#" class="text-secondary text-decoration-none">Community</a>
+      <a href="#" class="text-secondary text-decoration-none">Tracks</a>
+      <div class="dropup">
+        <button class="btn btn-sm btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown">Other Confs</button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">CSS Conf</a></li>
+          <li><a class="dropdown-item" href="#">Python Conf</a></li>
+          <li><a class="dropdown-item" href="#">Ruby Conf</a></li>
+          <li><a class="dropdown-item" href="#">Java Conf</a></li>
+        </ul>
+      </div>
     </div>
     <div>
-      <!-- TODO: copyright -->
+      <span class="text-secondary small">&copy; 2018 Full Stack Conf &amp; Paragraph</span>
     </div>
   </div>
 </footer>
